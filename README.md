@@ -2,17 +2,7 @@
 
 This class reviews some basic principles in machine learning.
 
-## Installation and Usage
-
-### Installation and Use via Github Codespaces (Recommended)
-
-To use this repository via codespaces simply click on the `code` &rarr; `codespaces` &rarr; `create codespace on main` buttons.
-
-Once the codespace is open in the browser, click the three bars in the top left corner and select `Open in VS Code Desktop`.
-
-If required, use `Cmd` / `Ctrl` + `Shift` + `P` &rarr; `Codespaces: Rebuild Container` to rebuild the container. Do not use `gh codespace rebuild`. This takes a long time since it re-downloads the entire image.
-
-### Display of Presentations via Github Codespaces (Recommended)
+## Display of Presentations
 
 Navigate to the `presentations` folder.
 
@@ -25,33 +15,95 @@ Start an http-server.
 ```bash
 bash ../scripts/start_server.sh
 ```
-### Use via Dev Container
 
-To use this repository via a Dev Container, be sure you have the Dev Containers extension installed, along with Docker Desktop and WSL 2 (Windows only). Clone the repository, open VS Code in the repository root, and click the button shown in the pop up in the bottom-right corner to open in the Dev Container.
+## Installation
 
-If the popup doesn't show type `Cmd` / `Ctrl` + `Shift` + `P` &rarr; `Reopen in Container` (if the container is already built) or `Cmd` / `Ctrl` + `Shift` + `P` &rarr; `Build and Open in Container` if the container is not yet built.
+### Installation and Use via Github Codespaces (Only Recommended for Low-Memory Projects)
+
+To use this repository via codespaces simply click on the `code` &rarr; `codespaces` &rarr; `create codespace on main` buttons.
+
+Once the codespace is open in the browser, click the three bars in the top left corner and select `Open in VS Code Desktop`.
+
+Widgets might work better when using VS Code Desktop vs. in the browser.
+
+If the codespace takes a long time to build, use `Cmd` / `Ctrl` + `Shift` + `P` &rarr; `Codespaces: View Creation Logs` to check status.
+
+If required, use `Cmd` / `Ctrl` + `Shift` + `P` &rarr; `Codespaces: Rebuild Container` to rebuild the container. Do not use `gh codespace rebuild`. This takes a long time since it re-downloads the entire image.
+
+### Dependencies for Local Installation (Recommended for PyTorch Projects)
+
+#### Poetry
+
+This project is built on Python 3.12. Poetry is required for installation. To install Poetry, view the instructions [here](https://python-poetry.org/docs/).
+
+In codespaces, Poetry installation is handled in the development container. The user does not need to install Poetry if working in codespaces.
 
 ### Local Installation
 
-The dependencies required for local installation can be found in `.devcontainer/Dockerfile` and `.devcontainer/configure_environment.sh`.
+To install locally, first install the required dependencies, then clone the repository and navigate to its directory.
 
-For local installation, perform set up and install dependencies in the order they appear in the Dockerfile and the configuration script, starting with the Dockerfile.
+```bash
+git clone <REPOSITORY NAME>
+cd <REPOSITORY NAME>
+```
 
-Final setup commands can be found in `.devcontainer/post_attach.sh`.
+Be sure to replace `<REPOSITORY NAME>` with the link to the repository that GitHub provides.
 
-Note that setup will be different depending on the local OS.
+#### Installing Python Dependencies Locally
 
-#### Viewing HTML Pages Directly in a Browser from Local Installation
+To install locally, first install the required dependencies (Poetry), then clone the repository and navigate to its directory.
 
-To view HTML pages directly in a browser, simply navigate to the pages of interest and open them with a preferred web browser.
+Configure Poetry to install its virtual environment inside the repository directory.
 
-#### Selecting the Correct Python Interpreter
+```bash
+poetry config virtualenvs.in-project true
+```
 
-If the correct Python interpreter is not selected by default, select it manually in VS Code.
+Install the repository's Python dependencies.
+
+If you only wish to install a virtual environment to use in Jupyter notebooks (no custom modules are needed) the use the following.
+
+```bash
+poetry install --no-root
+```
+
+If there are custom modules you need to install, then simply use `poetry install` without `--no-root`.
+
+```bash
+poetry install
+```
+
+Check where Poetry built the virtual environment with the following command.
+
+```bash
+poetry env info --path
+```
 
 Open the command pallette with `Ctrl` + `Shift` + `P` and type `Python: Select Interpreter`.
 
-Now specify that VSCode should use the that interpreter (the one in `./.venv/Scripts/python.exe`). Once you specify this, Jupyter notebooks should show the project's interpreter as an option when you click the `kernel` icon or the small icon showing the current version of python (e.g., `Python 3.12.1`) and then click `Select Another Kernel`, and finally click `Python Environments...`.
+Now specify that VSCode should use the that interpreter (the one in `./.venv/Scripts/python.exe` for example, though this path will be system-specific). Once you specify this, Jupyter notebooks should show the project's interpreter as an option when you click the `kernel` icon or the small icon showing the current version of python (e.g., `Python 3.12.1`) and then click `Select Another Kernel`, and finally click `Python Environments...`.
+
+### Troubleshooting
+
+If you run into issues installing with Poetry, check which Python poetry is using.
+
+```bash
+poetry env info
+```
+
+If this is an older, unexpected, or incompatible version, you can change it with the following.
+
+```bash
+poetry env use "$PYTHON_EXE"
+```
+
+Where `$PYTHON_EXE` is some environment variable containing the path to your preferred Python. For example:
+
+```bash
+PYTHON_EXE=~/AppData/Local/Programs/Python/Python312/python.exe
+```
+
+Note that you must use a Python that is within the version range specified in the `pyproject.toml`!
 
 ## License
 
