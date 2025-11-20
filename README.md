@@ -1,6 +1,6 @@
-# Fall 2025 Class 04 - Basic Principles
+# Fall 2024 Class 03 - Software Tools and Practice
 
-This class reviews some basic principles in machine learning.
+In this class we review common tools we will use throughout the semester.
 
 ## Display of Presentations
 
